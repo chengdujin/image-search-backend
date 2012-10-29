@@ -19,7 +19,8 @@ def sift_similar(img):
 	return ravel(d)
 
 def extract_features(name, img):
-	rclient.set(sift_similar(img), name)
+    sift_value = sift_similar(img).tolist()
+    rclient.set(sift_value, name)
 
 def make_regalur_image(img, size = (256, 256)):
 	return img.resize(size).convert('RGB')

@@ -36,9 +36,11 @@ def calculate_similarity(limg, rimg):
     return sift_similar(regular_limg, rimg)
 
 if __name__ == '__main__':
+    max_score = 0
     keys = rclient.keys()
     for key in keys:
-        current = calculate_similarity(sys.argv[1], key)
-        if current > max:
-            max = current
-    print max
+        current_score = calculate_similarity(sys.argv[1], key)
+        if current_score > max_score:
+            max_score = current_score
+            print max_score
+    print 'final score: %s' % str(max_score)
