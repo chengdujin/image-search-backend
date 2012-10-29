@@ -12,6 +12,9 @@ REDIS_SERVER = '127.0.0.1'
 rclient = redis.StrictRedis(REDIS_SERVER)
 
 
+def hist_similar(img):
+    return img.histogram()
+
 def sift_similar(img):
 	img.save('./tmp/reg_img.jpg')
 	key = sift.process_image('./tmp/reg_img.jpg')
@@ -19,8 +22,9 @@ def sift_similar(img):
 	return ravel(d)
 
 def extract_features(name, img):
-    sift_value = sift_similar(img).tolist()
-    rclient.set(sift_value, name)
+    #feature = sift_similar(img).tolist()
+    feature = hist_similar(img)
+    rclient.set(feature, name)
 
 def make_regalur_image(img, size = (256, 256)):
 	return img.resize(size).convert('RGB')
