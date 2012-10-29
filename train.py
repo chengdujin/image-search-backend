@@ -18,15 +18,15 @@ def sift_similar(img):
 	l, d = sift.read_features(key)
 	return ravel(d)
 
-def extract_features(name, img, index):
-	rclient.hset(name, index, sift_similar(img))
+def extract_features(name, img):
+	rclient.set(sift_similar(img), name)
 
 def make_regalur_image(img, size = (256, 256)):
 	return img.resize(size).convert('RGB')
 
 def calculate_features(name, path, img):
     regular = make_regalur_image(Image.open('%s/%s' % (path, img)))
-    extract_features(name, regular, img)
+    extract_features(name, regular)
     return '%s/%s is processed!' % (path, img)	
 
 if __name__ == '__main__':
