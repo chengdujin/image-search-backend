@@ -1,3 +1,5 @@
+python -c "import redis; rc = redis.StrictRedis('127.0.0.1'); rc.flushall()"
+
 python train.py "BarackObama" "../images/Barack Obama/S_Obama"
 python train.py "HillaryClinton" "../images/Hillary Clinton/S_Hillary Clinton"
 python train.py "MittRomney" "../images/Mitt Romney/S_Mitt Romney"
