@@ -3,6 +3,7 @@
 
 import Image
 from numpy import *
+import os
 import sift
 import sys
 
@@ -17,18 +18,19 @@ def sift_similar(img):
 	l, d = sift.read_features(key)
 	return ravel(d)
 
-def extract_features(img, index):
-	rclient.hset('hillary_clinton', index, sift_similar(img))
+def extract_features(name, img, index):
+	rclient.hset(name, index, sift_similar(img))
 
 def make_regalur_image(img, size = (256, 256)):
 	return img.resize(size).convert('RGB')
 
-def calculate_features(path, img):
-	regular = make_regalur_image(Image.open('%s%s' % (path, img)))
-	extract_features(regular, img)
-    return '%s%s is processed!' % (path, img)	
+def calculate_features(name, path, img):
+    regular = make_regalur_image(Image.open('%s/%s' % (path, img)))
+    extract_features(name, regular, img)
+    return '%s/%s is processed!' % (path, img)	
 
 if __name__ == '__main__':
-    path = sys.argv[1]
-    for f in os.list(path):
-        calculate_features(path, f)
+    name = sys.argv[1]
+    path = sys.argv[2]
+    for f in os.listdir(path):
+        print calculate_features(name, path, f)
