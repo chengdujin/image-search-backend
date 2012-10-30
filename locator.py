@@ -21,8 +21,8 @@ def sift_similar(limg, rimg):
     return sum(1 - (0 if l == r else float(abs(l - r))/max(l, r)) for l, r in zipped)
 
 def calculate_similarity(limg, rimg):
-    return hist_similar(limg, rimg)
-    #return sift_similar(limg, rimg)
+    #return hist_similar(limg, rimg)
+    return sift_similar(limg, rimg)
 
 def compute_histogram(limg):
     return limg.histogram()
@@ -38,8 +38,8 @@ def make_regalur_image(img, size = (256, 256)):
 
 def calculate_features(limg):
     regular_limg = make_regalur_image(Image.open(limg))
-    return compute_histogram(regular_limg)
-    #return compute_sift(regular_limg)
+    #return compute_histogram(regular_limg)
+    return compute_sift(regular_limg)
 
 if __name__ == '__main__':
     import time
