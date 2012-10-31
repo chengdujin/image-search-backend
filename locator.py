@@ -107,3 +107,18 @@ def application(environ, start_response):
         header = [('Content-type', 'text/plain'), ('Content-Length', str(len(str(e))))]
         start_response("200 OK", header)
         return [str(e)]  
+
+if __name__ == '__main__':
+    import time
+    a = time.time()
+    wanted = calculate_features(sys.argv[1]) 
+    b = time.time()
+    print 'calculating features takes ...', b - a 
+    max_score = 0 
+    max_key = None
+    keys = rclient.keys()
+    for key in keys:
+        current_score = calculate_similarity(wanted, key)
+        if current_score > max_score:
+            max_score = current_score
+            max_key = key 
