@@ -59,7 +59,7 @@ def image_search(request_features):
     records = {}
     total_keys = len(keys)
 
-    number_of_threads = 20 
+    number_of_threads = 1 
     for t in xrange(number_of_threads):
         ist = ImageSearchThread(request_features)
         #print '%s started ...' % str(ist)
@@ -116,13 +116,17 @@ def application(environ, start_response):
         header = [('Content-type', 'text/plain'), ('Content-Length', str(len(str(e))))]
         start_response("200 OK", header)
         return [str(e)]  
-
+'''
 if __name__ == '__main__':
     a = time.time()
     wanted = calculate_features(sys.argv[1]) 
     b = time.time()
     print 'calculating features takes ...', b - a 
-    output = image_search(wanted)
-    print output
+    #output = image_search(wanted)
+    #print output
+    keys = rclient.keys()
+    for key in keys:
+        current = calculate_similarity(wanted, key)
     c = time.time()
     print c - b
+'''
