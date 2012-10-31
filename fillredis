@@ -1,11 +1,11 @@
 python -c "import redis; rc = redis.StrictRedis('127.0.0.1'); rc.flushall()"
 
-python train.py "BarackObama" "images/Barack Obama/S_Obama"
-python train.py "HillaryClinton" "images/Hillary Clinton/S_Hillary Clinton"
-python train.py "MittRomney" "images/Mitt Romney/S_Mitt Romney"
+python train.py "Barack Obama" "images/Barack Obama/S_Obama"
+python train.py "Hillary Clinton" "images/Hillary Clinton/S_Hillary Clinton"
+python train.py "Mitt Romney" "images/Mitt Romney/S_Mitt Romney"
 python train.py "PSY" "images/PSY/S_PSY"
-python train.py "XiJinping" "images/XiJinping/S_XiJinping"
-python train.py "WenJiabao" "images/WenJiabao/S_WenJiabao"
-python train.py "HuJintao" "images/HuJintao/S_HuJintao"
-python train.py "RingtailedLemur" "images/RingtailedLemur/S_RingtailedLemur"
+python train.py "习近平" "images/XiJinping/S_XiJinping"
+python train.py "温家宝" "images/WenJiabao/S_WenJiabao"
+python train.py "胡锦涛" "images/HuJintao/S_HuJintao"
+python train.py "环尾狐猴" "images/RingtailedLemur/S_RingtailedLemur"
 
