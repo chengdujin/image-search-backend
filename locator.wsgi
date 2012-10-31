@@ -41,18 +41,15 @@ class ImageSearchThread(threading.Thread):
         self.request_features = request_features
 
     def run(self):
-        counter = 0
         while True:
             feature_number = queue.get()
-            counter = counter + 1
             a = time.time()
             trained_feature = keys[feature_number]
             score = calculate_similarity(self.request_features, trained_feature)
             records[score] = feature_number
             b = time.time()
-            print 'feature %s processed in %f seconds' % (feature_number, b-a)
+            #print 'feature %s processed in %f seconds' % (feature_number, b-a)
             queue.task_done()
-        print 'this thread handled %i jobs' % counter
 
 def image_search(request_features):
     global keys
@@ -61,15 +58,17 @@ def image_search(request_features):
     global records
     records = {}
     total_keys = len(keys)
+
+    number_of_threads = 20 
+    for t in xrange(number_of_threads):
+        ist = ImageSearchThread(request_features)
+        #print '%s started ...' % str(ist)
+        ist.setDaemon(True)
+        ist.start()
+
     for n in xrange(total_keys):
         queue.put(n)
         records[n] = 0
-    number_of_threads = 30 
-    for t in xrange(number_of_threads):
-        ot = ImageSearchThread(request_features)
-        print 'thread %s started' % str(ot)
-        ot.setDaemon(True)
-        ot.start()
     queue.join()
     return find_max()
 
