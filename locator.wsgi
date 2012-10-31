@@ -18,7 +18,7 @@ import Queue
 queue = Queue.Queue()
 
 def find_max():
-    key = keys[max(records.keys())]
+    key = keys[records[max(records.keys())]]
     return rclient.get(key)
 
 def hist_similar(lh, rh):
