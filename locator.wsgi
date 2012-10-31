@@ -5,6 +5,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('UTF-8')
 
+import cgi
 import Image
 from numpy import *
 import sift
@@ -76,8 +77,9 @@ def compute_histogram(limg):
     return limg.histogram()
 
 def compute_sift(limg):
-    limg.save('./tmp/reg_limg.jpg')
-    lkey = sift.process_image('./tmp/reg_limg.jpg')
+    limg.save('/var/www/wsgi/tmp/reg_limg.jpg')
+    raise Exception('0123')
+    lkey = sift.process_image('/var/www/wsgi/tmp/reg_limg.jpg')
     ll, dl = sift.read_features(lkey)
     return ravel(dl)
 
@@ -94,7 +96,7 @@ def read_http(environ):
     image_path = ''
     bin_data = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
     for key in bin_data.keys():
-        image_path = './tmp/%s' % key
+        image_path = '/var/www/wsgi/tmp/%s' % key
         f = open(image_path, 'wb')
         f.write(bin_data[key].value)
         f.close()
