@@ -50,7 +50,7 @@ class ImageSearchThread(threading.Thread):
             score = calculate_similarity(self.request_features, trained_feature)
             records[score] = feature_number
             b = time.time()
-            print 'feature %s processed in %i seconds' % (feature_number, b-a)
+            print 'feature %s processed in %f seconds' % (feature_number, b-a)
             queue.task_done()
         print 'this thread handled %i jobs' % counter
 
@@ -64,7 +64,7 @@ def image_search(request_features):
     for n in xrange(total_keys):
         queue.put(n)
         records[n] = 0
-    number_of_threads = 10 
+    number_of_threads = 30 
     for t in xrange(number_of_threads):
         ot = ImageSearchThread(request_features)
         print 'thread %s started' % str(ot)
