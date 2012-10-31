@@ -8,6 +8,7 @@ sys.setdefaultencoding('UTF-8')
 import Image
 from numpy import *
 import sift
+import time
 import threading
 
 import redis
@@ -42,9 +43,12 @@ class ImageSearchThread(threading.Thread):
     def run(self):
         while True:
             feature_number = queue.get()
+            a = time.time()
             trained_feature = keys[feature_number]
             score = calculate_similarity(self.request_features, trained_feature)
             records[score] = feature_number
+            b = time.time()
+            print 'feature %s is processed in %i seconds' % (feature_number, b-a)
             queue.task_done()
 
 def image_search(request_features):
@@ -60,6 +64,7 @@ def image_search(request_features):
     number_of_threads = 10 
     for t in xrange(number_of_threads):
         ot = ImageSearchThread(request_features)
+        print 'thread %s started' % str(ot)
         ot.setDaemon(True)
         ot.start()
     queue.join()
@@ -111,7 +116,6 @@ def application(environ, start_response):
         return [str(e)]  
 
 if __name__ == '__main__':
-    import time
     a = time.time()
     wanted = calculate_features(sys.argv[1]) 
     b = time.time()
