@@ -14,6 +14,8 @@ import redis
 REDIS_SERVER = '127.0.0.1'
 rclient = redis.StrictRedis(REDIS_SERVER)
 
+import Queue
+queue = Queue.Queue()
 
 def find_max():
     key = keys[max(records.keys())]
@@ -39,11 +41,11 @@ class ImageSearchThread(threading.Thread):
 
     def run(self):
         while True:
-            feature_number = self.queue.get()
+            feature_number = queue.get()
             trained_feature = keys[feature_number]
             score = calculate_similarity(self.request_features, trained_feature)
             records[score] = feature_number
-            self.queue.task_done()
+            queue.task_done()
 
 def image_search(request_features):
     global keys
@@ -114,11 +116,7 @@ if __name__ == '__main__':
     wanted = calculate_features(sys.argv[1]) 
     b = time.time()
     print 'calculating features takes ...', b - a 
-    max_score = 0 
-    max_key = None
-    keys = rclient.keys()
-    for key in keys:
-        current_score = calculate_similarity(wanted, key)
-        if current_score > max_score:
-            max_score = current_score
-            max_key = key 
+    output = image_search(wanted)
+    print output
+    c = time.time()
+    print c - b
