@@ -27,10 +27,10 @@ def extract_features(name, img):
     rclient.set(feature, name)
 
 def make_regalur_image(img, size = (256, 256)):
-    return img.resize(size).convert('RGB')
+    return img.resize(size).convert('L')
 
 def calculate_features(name, path, img):
-    regular = make_regalur_image(Image.open('%s/%s' % (path, img)).convert('L'))
+    regular = make_regalur_image(Image.open('%s/%s' % (path, img)))
     extract_features(name, regular)
     return '%s/%s is processed!' % (path, img)	
 

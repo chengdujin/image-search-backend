@@ -84,10 +84,10 @@ def compute_sift(limg):
     return ravel(dl)
 
 def make_regalur_image(img, size = (256, 256)):
-	return img.resize(size).convert('RGB')
+    return img.resize(size).convert('L')
 
 def calculate_features(limg):
-    regular_limg = make_regalur_image(Image.open(limg).convert('L'))
+    regular_limg = make_regalur_image(Image.open(limg))
     return compute_histogram(regular_limg)
     #return compute_sift(regular_limg)
 
