@@ -4,6 +4,7 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('UTF-8')
+sys.path.append('/var/www/wsgi')
 
 import cgi
 import Image
@@ -78,7 +79,6 @@ def compute_histogram(limg):
 
 def compute_sift(limg):
     limg.save('/var/www/wsgi/tmp/reg_limg.jpg')
-    raise Exception('0123')
     lkey = sift.process_image('/var/www/wsgi/tmp/reg_limg.jpg')
     ll, dl = sift.read_features(lkey)
     return ravel(dl)
