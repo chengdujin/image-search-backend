@@ -22,8 +22,8 @@ def sift_similar(img):
     return ravel(d)
 
 def extract_features(name, img):
-    feature = hist_similar(img)
-    #feature = sift_similar(img).tolist()
+    #feature = hist_similar(img)
+    feature = sift_similar(img).tolist()
     rclient.set(feature, name)
 
 def make_regalur_image(img, size = (256, 256)):
@@ -31,6 +31,7 @@ def make_regalur_image(img, size = (256, 256)):
 
 def calculate_features(name, path, img):
     regular = make_regalur_image(Image.open('%s/%s' % (path, img)))
+    #regular = Image.open('%s/%s' % (path, img)).convert('L')
     extract_features(name, regular)
     return '%s/%s is processed!' % (path, img)	
 
