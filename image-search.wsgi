@@ -34,8 +34,8 @@ def sift_similar(limg, rimg):
     return sum(1 - (0 if l == r else float(abs(l - r))/max(l, r)) for l, r in zipped)
 
 def calculate_similarity(limg, rimg):
-    #return hist_similar(limg, rimg)
-    return sift_similar(limg, rimg)
+    return hist_similar(limg, rimg)
+    #return sift_similar(limg, rimg)
 
 class ImageSearchThread(threading.Thread):
     def __init__(self, request_features):
@@ -87,9 +87,9 @@ def make_regalur_image(img, size = (256, 256)):
 	return img.resize(size).convert('RGB')
 
 def calculate_features(limg):
-    regular_limg = make_regalur_image(Image.open(limg))
-    #return compute_histogram(regular_limg)
-    return compute_sift(regular_limg)
+    regular_limg = make_regalur_image(Image.open(limg).convert('L'))
+    return compute_histogram(regular_limg)
+    #return compute_sift(regular_limg)
 
 def read_http(environ):
     'read binary image file and write to local disk'
